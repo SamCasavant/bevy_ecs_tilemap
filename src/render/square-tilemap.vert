@@ -44,10 +44,12 @@ void main() {
 
     int texture_index = int(current_animation_frame);
     
-    int columns = int(texture_size.x) / int(tile_size.x);
+    vec2 slot_size = tile_size + spacing;
 
-    float sprite_sheet_x = floor(float(texture_index % columns)) * (tile_size.x + spacing.x) - spacing.x;
-    float sprite_sheet_y = floor((texture_index / columns)) * (tile_size.y + spacing.y) - spacing.y;
+    int columns = int(floor((texture_size.x + spacing.x) / slot_size.x));
+
+    float sprite_sheet_x = floor(mod(float(texture_index), float(columns)) * (slot_size.x));
+    float sprite_sheet_y = floor((texture_index / columns)) * (slot_size.y);
 
     float start_u = sprite_sheet_x / texture_size.x;
     float end_u = (sprite_sheet_x + tile_size.x) / texture_size.x;
